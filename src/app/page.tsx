@@ -11,7 +11,9 @@ export default function Home() {
     revalidateOnFocus: false,
     revalidateOnReconnect: false
   })
-
+  if (!data) {
+    return <div>...Loading</div>
+  }
   return (
     <main>
       <ul>
@@ -25,7 +27,7 @@ export default function Home() {
           <Link href='/tiktok'>Tiktok</Link>
         </li>
       </ul>
-      <AppTable />
+      <AppTable blogs={data} />
     </main>
   )
 }
