@@ -3,9 +3,17 @@ import { Button } from 'react-bootstrap'
 import Table from 'react-bootstrap/Table'
 import CreateModal from './create.modal'
 import { useState } from 'react'
+import UpdateModal from './update.modal'
 
 function AppTable({ blogs }: { blogs: IBlog[] }) {
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState<boolean>(false)
+  const [showModalUpdate, setShowModalUpdate] = useState<boolean>(false)
+  const [blog, setBLog] = useState<IBlog | null>(null)
+
+  const handleEdit = (data: IBlog) => {
+    setBLog(data)
+    setShowModalUpdate(true)
+  }
 
   return (
     <>
@@ -34,7 +42,7 @@ function AppTable({ blogs }: { blogs: IBlog[] }) {
                   <td>{item.author}</td>
                   <td>
                     <Button variant='primary'>View</Button>
-                    <Button variant='warning' className='mx-3'>
+                    <Button variant='warning' className='mx-3' onClick={() => handleEdit(item)}>
                       Edit
                     </Button>
                     <Button variant='danger'>Delete</Button>
@@ -46,6 +54,7 @@ function AppTable({ blogs }: { blogs: IBlog[] }) {
         </tbody>
       </Table>
       <CreateModal show={show} setShow={setShow} />
+      <UpdateModal show={showModalUpdate} setShow={setShowModalUpdate} blog={blog} setBLog={setBLog} />
     </>
   )
 }

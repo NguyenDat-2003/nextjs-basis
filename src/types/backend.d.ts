@@ -1,6 +1,6 @@
 interface IBlog {
   id: number
-  content: number
-  author: number
-  title: number
+  content: string
+  author: string
+  title: string
 }
