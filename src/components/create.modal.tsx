@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 interface IProps {
   show: boolean
@@ -21,7 +22,26 @@ function CreateModal({ show, setShow }: IProps) {
   const [author, setAuthor] = useState<string>('')
   const [content, setContent] = useState<string>('')
 
-  const handleSave = () => {}
+  const handleSave = () => {
+    if (!title || !author || !content) {
+      toast.error('Nhập thiếu dữ liệu')
+      handleClose()
+      return
+    }
+    fetch('http://localhost:8000/blogs', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ title, author, content })
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        toast.success('Tạo thành công')
+        handleClose()
+      })
+  }
 
   return (
     <>
