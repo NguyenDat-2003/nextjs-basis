@@ -5,6 +5,8 @@ import CreateModal from './create.modal'
 import { useState } from 'react'
 import UpdateModal from './update.modal'
 import Link from 'next/link'
+import { mutate } from 'swr'
+import { toast } from 'react-toastify'
 
 function AppTable({ blogs }: { blogs: IBlog[] }) {
   const [show, setShow] = useState<boolean>(false)
@@ -14,6 +16,24 @@ function AppTable({ blogs }: { blogs: IBlog[] }) {
   const handleEdit = (data: IBlog) => {
     setBLog(data)
     setShowModalUpdate(true)
+  }
+
+  const handleDelete = (id: number) => {
+    let text = 'Bạn có chắc muốn xóa?'
+    if (confirm(text) == true) {
+      fetch(`http://localhost:8000/blogs/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Accept: 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        }
+      }).then(() => {
+        toast.success('Xóa thành công')
+        mutate('http://localhost:8000/blogs')
+      })
+    } else {
+      // toast.warning('Hủy hành động xóa')
+    }
   }
 
   return (
@@ -48,7 +68,9 @@ function AppTable({ blogs }: { blogs: IBlog[] }) {
                     <Button variant='warning' className='mx-3' onClick={() => handleEdit(item)}>
                       Edit
                     </Button>
-                    <Button variant='danger'>Delete</Button>
+                    <Button variant='danger' onClick={() => handleDelete(item.id)}>
+                      Delete
+                    </Button>
                   </td>
                 </tr>
               </>

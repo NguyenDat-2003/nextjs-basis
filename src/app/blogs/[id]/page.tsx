@@ -19,7 +19,7 @@ function DetailBlog({ params }: { params: { id: number } }) {
   return (
     <>
       <div style={{ marginBottom: '20px', marginTop: '20px' }}>
-        <Button variant='primary' className='mb-4' onClick={() => router.push('/')}>
+        <Button variant='primary' className='mb-4' onClick={() => router.push('/blogs')}>
           Back
         </Button>
         <Card>
