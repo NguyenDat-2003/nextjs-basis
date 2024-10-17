@@ -1,19 +1,8 @@
 'use client'
-import Link from 'next/link'
-import useSWR from 'swr'
 
-import AppTable from '~/components/app.tables'
+import Link from 'next/link'
 
 export default function Home() {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json())
-  const { data, error, isLoading } = useSWR('http://localhost:8000/blogs', fetcher, {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false
-  })
-  if (!data) {
-    return <div>...Loading</div>
-  }
   return (
     <main>
       <ul>
@@ -27,7 +16,6 @@ export default function Home() {
           <Link href='/tiktok'>Tiktok</Link>
         </li>
       </ul>
-      <AppTable blogs={data?.sort((a: any, b: any) => b.id - a.id)} />
     </main>
   )
 }

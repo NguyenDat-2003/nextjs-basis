@@ -4,6 +4,7 @@ import Table from 'react-bootstrap/Table'
 import CreateModal from './create.modal'
 import { useState } from 'react'
 import UpdateModal from './update.modal'
+import Link from 'next/link'
 
 function AppTable({ blogs }: { blogs: IBlog[] }) {
   const [show, setShow] = useState<boolean>(false)
@@ -41,7 +42,9 @@ function AppTable({ blogs }: { blogs: IBlog[] }) {
                   <td>{item.title}</td>
                   <td>{item.author}</td>
                   <td>
-                    <Button variant='primary'>View</Button>
+                    <Link href={`/blogs/${item.id}`}>
+                      <Button variant='primary'>View</Button>
+                    </Link>
                     <Button variant='warning' className='mx-3' onClick={() => handleEdit(item)}>
                       Edit
                     </Button>
