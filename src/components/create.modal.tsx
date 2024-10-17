@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import { useState } from 'react'
+import { mutate } from 'swr'
+
 import { toast } from 'react-toastify'
 
 interface IProps {
@@ -40,6 +42,7 @@ function CreateModal({ show, setShow }: IProps) {
       .then((res) => {
         toast.success('Tạo thành công')
         handleClose()
+        mutate('http://localhost:8000/blogs')
       })
   }
 
